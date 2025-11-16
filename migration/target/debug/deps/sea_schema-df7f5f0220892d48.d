@@ -1,0 +1,11 @@
+/home/kiko/Documents/projects/TodoApi/migration/target/debug/deps/sea_schema-df7f5f0220892d48.d: /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/lib.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/parser.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/sqlx_types/mod.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/sqlx_types/mock.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/util.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/name.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/probe.rs
+
+/home/kiko/Documents/projects/TodoApi/migration/target/debug/deps/libsea_schema-df7f5f0220892d48.rmeta: /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/lib.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/parser.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/sqlx_types/mod.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/sqlx_types/mock.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/util.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/name.rs /home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/probe.rs
+
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/lib.rs:
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/parser.rs:
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/sqlx_types/mod.rs:
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/sqlx_types/mock.rs:
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/util.rs:
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/name.rs:
+/home/kiko/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-schema-0.16.2/src/probe.rs:
