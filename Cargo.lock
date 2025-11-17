@@ -9,6 +9,7 @@ dependencies = [
  "futures",
  "rocket",
  "sea-orm",
+ "serde",
 ]
 
 [[package]]

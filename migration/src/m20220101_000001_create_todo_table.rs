@@ -1,3 +1,4 @@
+use rocket::serde::*;
 use sea_orm_migration::{prelude::*, schema::*};
 
 pub struct Migration;
@@ -36,7 +37,7 @@ impl MigrationTrait for Migration {
     }
 }
 
-#[derive(DeriveIden)]
+#[derive(DeriveIden, Serialize, Deserialize)]
 enum TodoItem {
     Table,
     Id,

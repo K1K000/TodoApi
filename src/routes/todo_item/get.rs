@@ -1,4 +1,5 @@
 use crate::entities::prelude::TodoItem;
+use crate::entities::todo_item::{self, *};
 use crate::errorhand::ErrorResponder;
 use rocket::serde::json::Json;
 use rocket::*;
@@ -31,4 +32,20 @@ pub async fn by_id(
     let db = db.inner();
     let todo_item = TodoItem::find_by_id(id).into_json().one(db).await?;
     Ok(Json(todo_item))
+}
+
+#[post("/", format = "json", data = "<new_item>")]
+pub async fn post(
+    db: &State<DatabaseConnection>,
+    new_item: Json<Model>,
+) -> Result<&'static str, ErrorResponder> {
+    let db = db.inner();
+
+    let new_item = todo_item::ActiveModel {
+        name: Set(new_item.name.clone()),
+        is_complete: Set(new_item.is_complete.clone()),
+        ..Default::default()
+    };
+    TodoItem::insert(new_item)?;
+    return "did do it this time";
 }
