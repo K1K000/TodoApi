@@ -8,8 +8,8 @@ use sea_orm::*;
 // routes/todo_item/get.rs or something
 
 //todo proper routing cause this is ass
-#[get("/todoitem")]
-pub async fn get_todo_items(
+#[get("/")]
+pub async fn all(
     db: &State<DatabaseConnection>,
 ) -> Result<Json<Vec<sea_orm::JsonValue>>, ErrorResponder> {
     // type ORM = TodoItemGetORM;
@@ -23,8 +23,8 @@ pub async fn get_todo_items(
     Ok(Json(todo_items))
 }
 
-#[get("/todoitem/<id>")]
-pub async fn get_todo_item_id(
+#[get("/<id>")]
+pub async fn by_id(
     db: &State<DatabaseConnection>,
     id: i32,
 ) -> Result<Json<Option<sea_orm::JsonValue>>, ErrorResponder> {

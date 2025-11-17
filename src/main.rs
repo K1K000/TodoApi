@@ -1,12 +1,16 @@
+mod entities;
+mod errorhand;
+mod mounter;
+mod routes;
+
 use entities::{prelude::*, *};
 use rocket::serde::json::Json;
 use rocket::*;
 // use sea_orm::sqlx::Database;
 use sea_orm::*;
-mod entities;
-mod errorhand;
-mod todo_item;
-use crate::todo_item::get_todo_items;
+
+use crate::mounter::RocketMount;
+use crate::routes::todo_item::TodoItemMounter;
 
 const DATABASE_URL: &str = "sqlite:./sqlite.db?mode=rwc";
 pub async fn set_up_db() -> Result<DatabaseConnection, DbErr> {
@@ -19,9 +23,7 @@ async fn rocket() -> _ {
         Ok(db) => db,
         Err(err) => panic!("{}", err),
     };
-    rocket::build()
-        .manage(db)
-        .mount("/", routes![greet, get_todo_items])
+    rocket::build().manage(db).mount_route::<TodoItemMounter>()
 }
 
 #[get("/")]
