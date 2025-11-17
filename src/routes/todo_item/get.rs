@@ -1,6 +1,5 @@
 use crate::entities::prelude::TodoItem;
-use crate::entities::todo_item::{self, *};
-use crate::errorhand::ErrorResponder;
+use crate::errorhand::{ErrorMessage, ErrorResponder};
 use rocket::serde::json::Json;
 use rocket::*;
 use sea_orm::*;
@@ -28,24 +27,16 @@ pub async fn all(
 pub async fn by_id(
     db: &State<DatabaseConnection>,
     id: i32,
-) -> Result<Json<Option<sea_orm::JsonValue>>, ErrorResponder> {
+) -> Result<Json<sea_orm::JsonValue>, ErrorResponder> {
     let db = db.inner();
-    let todo_item = TodoItem::find_by_id(id).into_json().one(db).await?;
+    let todo_item = TodoItem::find_by_id(id)
+        .into_json()
+        .one(db)
+        .await?
+        .ok_or_else(|| {
+            ErrorResponder::BadRequest(Json(ErrorMessage {
+                message: "Record doesnt exist".into(),
+            }))
+        })?;
     Ok(Json(todo_item))
-}
-
-#[post("/", format = "json", data = "<new_item>")]
-pub async fn post(
-    db: &State<DatabaseConnection>,
-    new_item: Json<Model>,
-) -> Result<&'static str, ErrorResponder> {
-    let db = db.inner();
-
-    let new_item = todo_item::ActiveModel {
-        name: Set(new_item.name.clone()),
-        is_complete: Set(new_item.is_complete.clone()),
-        ..Default::default()
-    };
-    TodoItem::insert(new_item)?;
-    return "did do it this time";
 }
