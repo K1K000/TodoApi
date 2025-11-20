@@ -1,16 +1,11 @@
 use crate::entities::prelude::TodoItem;
 use crate::entities::todo_item;
 use crate::errorhand::ErrorResponder;
-use rocket::serde::Deserialize;
+use crate::routes::todo_item::todo_item_dto::CreateTodoItem;
+// use rocket::serde::Deserialize;
 use rocket::serde::json::Json;
 use rocket::*;
 use sea_orm::*;
-
-#[derive(Deserialize)]
-pub struct CreateTodoItem {
-    pub name: String,
-    pub is_complete: bool,
-}
 
 #[post("/", format = "json", data = "<new_item>")]
 pub async fn single(

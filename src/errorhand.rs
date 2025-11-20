@@ -9,10 +9,9 @@ pub struct ErrorMessage {
 }
 
 #[derive(Responder)]
-#[response(status = 500, content_type = "json")]
 pub enum ErrorResponder {
     #[response(status = 404)]
-    NotFound(Json<ErrorMessage>),
+    NotFound(()),
 
     #[response(status = 500)]
     InternalError(Json<ErrorMessage>),
@@ -25,9 +24,7 @@ pub enum ErrorResponder {
 impl From<DbErr> for ErrorResponder {
     fn from(err: DbErr) -> Self {
         match err {
-            DbErr::RecordNotFound(_) => ErrorResponder::NotFound(Json(ErrorMessage {
-                message: "Record not found".into(),
-            })),
+            DbErr::RecordNotFound(_) => ErrorResponder::NotFound(()),
             _ => ErrorResponder::InternalError(Json(ErrorMessage {
                 message: "server internal error".into(),
             })),

@@ -4,7 +4,8 @@ use crate::mounter::Mounter;
 
 pub mod get;
 pub mod post;
-pub mod todoitemdto;
+pub mod put;
+pub mod todo_item_dto;
 
 pub struct TodoItemMounter;
 
