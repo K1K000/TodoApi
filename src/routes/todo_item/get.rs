@@ -4,10 +4,6 @@ use rocket::serde::json::Json;
 use rocket::*;
 use sea_orm::*;
 
-// routes/todo_item/mod.rs -> fn add_routes(r: Rocket<Build>) -> Rocket<Build>
-// routes/todo_item/get.rs or something
-
-//todo proper routing cause this is ass
 #[get("/")]
 pub async fn all(
     db: &State<DatabaseConnection>,
