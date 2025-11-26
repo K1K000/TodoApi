@@ -1,8 +1,11 @@
 use crate::entities::prelude::TodoItem;
+use crate::entities::prelude::User;
+use crate::entities::user::Entity;
 use crate::errorhand::{ErrorMessage, ErrorResponder};
 use rocket::serde::json::Json;
 use rocket::*;
 use sea_orm::*;
+// .map(|val| ORM::from(val)) // GetORM should have Serialize implemented (derived)
 
 #[get("/")]
 pub async fn all(
@@ -11,11 +14,7 @@ pub async fn all(
     // type ORM = TodoItemGetORM;
     let db = db.inner();
 
-    let todo_items = TodoItem::find()
-        .into_json()
-        .all(db)
-        // .map(|val| ORM::from(val)) // GetORM should have Serialize implemented (derived)
-        .await?;
+    let todo_items = TodoItem::find().into_json().all(db).await?;
     Ok(Json(todo_items))
 }
 

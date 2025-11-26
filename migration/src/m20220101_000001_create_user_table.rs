@@ -5,7 +5,7 @@ pub struct Migration;
 
 impl MigrationName for Migration {
     fn name(&self) -> &str {
-        "m01_create_todo_table"
+        "01_create_user_table"
     }
 }
 
@@ -15,16 +15,15 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(TodoItem::Table)
+                    .table(User::Table)
                     .col(
-                        ColumnDef::new(TodoItem::Id)
+                        ColumnDef::new(User::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(TodoItem::Name).string().not_null())
-                    .col(ColumnDef::new(TodoItem::IsComplete).boolean().not_null())
+                    .col(ColumnDef::new(User::Name).string().not_null())
                     .to_owned(),
             )
             .await
@@ -32,15 +31,14 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_table(Table::drop().table(TodoItem::Table).to_owned())
+            .drop_table(Table::drop().table(User::Table).to_owned())
             .await
     }
 }
 
 #[derive(DeriveIden, Serialize, Deserialize)]
-enum TodoItem {
+pub enum User {
     Table,
     Id,
     Name,
-    IsComplete,
 }

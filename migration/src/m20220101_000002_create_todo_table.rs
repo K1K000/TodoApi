@@ -1,11 +1,13 @@
 use rocket::serde::*;
 use sea_orm_migration::{prelude::*, schema::*};
 
+use crate::m20220101_000001_create_user_table::User;
+
 pub struct Migration;
 
 impl MigrationName for Migration {
     fn name(&self) -> &str {
-        "02_create_user_table"
+        "02_create_todo_table"
     }
 }
 
@@ -15,16 +17,23 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(User::Table)
+                    .table(TodoItem::Table)
                     .col(
-                        ColumnDef::new(User::Id)
+                        ColumnDef::new(TodoItem::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(User::Name).string().not_null())
-                    .col(ColumnDef::new())
+                    .col(ColumnDef::new(TodoItem::Name).string().not_null())
+                    .col(ColumnDef::new(TodoItem::IsComplete).boolean().not_null())
+                    .col(ColumnDef::new(TodoItem::UserId).integer().not_null())
+                    .foreign_key(
+                        ForeignKey::create()
+                            .name("fk_todoitem_user")
+                            .from(TodoItem::Table, TodoItem::UserId)
+                            .to(User::Table, User::Id),
+                    )
                     .to_owned(),
             )
             .await
@@ -38,8 +47,10 @@ impl MigrationTrait for Migration {
 }
 
 #[derive(DeriveIden, Serialize, Deserialize)]
-enum User {
+enum TodoItem {
     Table,
     Id,
     Name,
+    IsComplete,
+    UserId,
 }
