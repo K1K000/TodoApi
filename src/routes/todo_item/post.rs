@@ -2,7 +2,7 @@ use crate::entities::prelude::TodoItem;
 use crate::entities::todo_item;
 use crate::errorhand::ErrorResponder;
 // use crate:routes::todo_item::post;
-use crate::routes::todo_item::todo_item_dto::CreateTodoItem;
+use crate::routes::todo_item::dto::CreateTodoItem;
 // use rocket::serde::Deserialize;
 use rocket::serde::json::Json;
 use rocket::*;

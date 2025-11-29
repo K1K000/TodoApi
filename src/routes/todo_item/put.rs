@@ -1,7 +1,7 @@
 use crate::entities::prelude::TodoItem;
 use crate::entities::todo_item;
 use crate::errorhand::ErrorResponder;
-use crate::routes::todo_item::todo_item_dto::CreateTodoItem;
+use crate::routes::todo_item::dto::CreateTodoItem;
 use rocket::http::Status;
 // use rocket::serde::Deserialize;
 use rocket::serde::json::Json;
