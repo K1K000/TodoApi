@@ -3,10 +3,10 @@ use rocket::{Build, Rocket, routes};
 use crate::mounter::Mounter;
 
 pub mod delete;
+pub mod dto;
 pub mod get;
 pub mod post;
 pub mod put;
-pub mod todo_item_dto;
 
 pub struct TodoItemMounter;
 
