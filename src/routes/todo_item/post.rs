@@ -15,11 +15,12 @@ pub async fn single(
 ) -> Result<&'static str, ErrorResponder> {
     let db = db.inner();
 
-    let new_itemm = todo_item::ActiveModel {
+    let new_row = todo_item::ActiveModel {
         name: Set(new_item.name.clone()),
         is_complete: Set(new_item.is_complete),
+        user_id: Set(new_item.user_id),
         ..Default::default()
     };
-    TodoItem::insert(new_itemm).exec(db).await?;
+    TodoItem::insert(new_row).exec(db).await?;
     Ok("did do it this time")
 }

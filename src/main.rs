@@ -11,6 +11,7 @@ use sea_orm::*;
 
 use crate::mounter::RocketMount;
 use crate::routes::todo_item::TodoItemMounter;
+use crate::routes::user::UserMounter;
 
 const DATABASE_URL: &str = "sqlite:./sqlite.db?mode=rwc";
 pub async fn set_up_db() -> Result<DatabaseConnection, DbErr> {
@@ -23,7 +24,10 @@ async fn rocket() -> _ {
         Ok(db) => db,
         Err(err) => panic!("{}", err),
     };
-    rocket::build().manage(db).mount_route::<TodoItemMounter>()
+    rocket::build()
+        .manage(db)
+        .mount_route::<UserMounter>()
+        .mount_route::<TodoItemMounter>()
 }
 
 #[get("/")]
