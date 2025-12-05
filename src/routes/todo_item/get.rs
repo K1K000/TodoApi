@@ -1,6 +1,8 @@
 use crate::entities::prelude::TodoItem;
 use crate::errorhand::{ErrorMessage, ErrorResponder};
 use crate::routes::todo_item::dto::*;
+
+use crate::entities::prelude::*;
 use rocket::serde::json::Json;
 use rocket::*;
 use sea_orm::*;
@@ -14,10 +16,17 @@ pub async fn all(
     let db = db.inner();
     Ok(Json(
         TodoItem::find()
+            .find_also_related(User)
             .all(db)
             .await?
             .iter()
-            .map(|val| todo_item_to_dto(val.clone()))
+            // TODO: handle the option properly
+            .map(|(item, user)| {
+                todo_item_to_dto(
+                    item,
+                    user.as_ref().expect("Item should have at least 1 user"),
+                )
+            })
             .collect(),
     ))
 }
@@ -28,12 +37,19 @@ pub async fn by_id(
     id: i32,
 ) -> Result<Json<ResponseTodoItem>, ErrorResponder> {
     let db = db.inner();
-    let todo_item = TodoItem::find_by_id(id).one(db).await?.ok_or_else(|| {
-        ErrorResponder::BadRequest(Json(ErrorMessage {
-            message: "Record doesnt exist".into(),
-        }))
-    })?;
-    Ok(Json(todo_item_to_dto(todo_item)))
+    let (item, user) = TodoItem::find_by_id(id)
+        .find_also_related(User)
+        .one(db)
+        .await?
+        .ok_or_else(|| {
+            ErrorResponder::BadRequest(Json(ErrorMessage {
+                message: "Record doesnt exist".into(),
+            }))
+        })?;
+
+    let user = user.ok_or(ErrorResponder::NotFound(()))?;
+
+    Ok(Json(todo_item_to_dto(&item, &user)))
     // Ok(Json(ResponseTodoItem {
     //     id: todo_item.id,
     //     name: todo_item.name,

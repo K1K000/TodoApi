@@ -2,6 +2,7 @@ use crate::entities::prelude::User;
 use crate::entities::user;
 use crate::errorhand::ErrorResponder;
 use crate::routes::user::dto::*;
+use rocket::response::status;
 use rocket::serde::json::Json;
 use rocket::*;
 use sea_orm::*;
@@ -10,13 +11,18 @@ use sea_orm::*;
 pub async fn single(
     db: &State<DatabaseConnection>,
     new_item: Json<CreateUser>,
-) -> Result<&'static str, ErrorResponder> {
+) -> Result<status::Created<Json<ResponseUser>>, ErrorResponder> {
     let db = db.inner();
 
     let new_row = user::ActiveModel {
         name: Set(new_item.name.clone()),
         ..Default::default()
     };
-    User::insert(new_row).exec(db).await?;
-    Ok("did do it this time")
+    let insert_res = User::insert(new_row).exec(db).await?;
+    Ok(
+        status::Created::new("http://127.0.0.1:8000/user").body(Json(ResponseUser {
+            id: insert_res.last_insert_id,
+            name: new_item.name.clone(),
+        })),
+    )
 }
