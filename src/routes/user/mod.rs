@@ -5,13 +5,14 @@ mod delete;
 mod dto;
 mod get;
 mod post;
+mod put;
 pub struct UserMounter;
 
 impl Mounter for UserMounter {
     fn mount(r: Rocket<Build>) -> Rocket<Build> {
         r.mount(
             "/user",
-            routes![get::all, get::by_id, post::single, delete::by_id],
+            routes![get::all, get::by_id, post::single, delete::by_id, put::put],
         )
     }
 }

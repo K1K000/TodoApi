@@ -1,27 +1,25 @@
-use crate::entities::{prelude::TodoItem, todo_item};
+use crate::entities::{prelude::User, user};
 use crate::errorhand::ErrorResponder;
-use crate::routes::todo_item::dto::CreateTodoItem;
+use crate::routes::user::dto::CreateUser;
 // use rocket::serde::Deserialize;
 use rocket::{http::Status, serde::json::Json, *};
 use sea_orm::{entity::*, query::*, *};
 
 #[put("/<id>", data = "<new_item>", format = "json")]
 pub async fn put(
-    new_item: Json<CreateTodoItem>,
+    new_item: Json<CreateUser>,
     id: i32,
     db: &State<DatabaseConnection>,
 ) -> Result<Status, ErrorResponder> {
     let db = db.inner();
-    match TodoItem::find_by_id(id).one(db).await? {
+    match User::find_by_id(id).one(db).await? {
         Some(_val) => {
-            let new_row = todo_item::ActiveModel {
+            let new_itemm = user::ActiveModel {
                 id: sea_orm::ActiveValue::set(id),
                 name: Set(new_item.name.clone()),
-                is_complete: Set(new_item.is_complete),
-                user_id: Set(new_item.user_id),
             };
-            todo_item::Entity::update(new_row)
-                .filter(todo_item::Column::Id.contains(id.to_string()))
+            user::Entity::update(new_itemm)
+                .filter(user::Column::Id.contains(id.to_string()))
                 .exec(db)
                 .await?;
             Ok(Status::NoContent)
